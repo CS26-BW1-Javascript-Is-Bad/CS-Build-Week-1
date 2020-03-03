@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 import uuid
+import math
 
 class Room(models.Model):
     title = models.CharField(max_length=50, default="DEFAULT TITLE")
@@ -51,6 +52,12 @@ class Player(models.Model):
         except Room.DoesNotExist:
             self.initialize()
             return self.room()
+
+
+class Map:
+    def __init__(self, rooms):
+        self.rooms = rooms
+        self.size = math.sqrt(len(rooms))
 
 @receiver(post_save, sender=User)
 def create_user_player(sender, instance, created, **kwargs):
