@@ -86,3 +86,10 @@ def get_room_by_id(request, room_id):
                              'x': room.x, 'y': room.y,
                              'asset': room.asset})
     return response
+
+
+@csrf_exempt
+@api_view(["GET"])
+def get_map(request):
+    rooms = [room for room in Room.objects.values()]
+    return JsonResponse({'map': rooms})
