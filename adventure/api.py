@@ -65,3 +65,13 @@ def move(request):
 def say(request):
     # IMPLEMENT
     return JsonResponse({'error':"Not yet implemented"}, safe=True, status=500)
+
+@csrf_exempt
+@api_view(["POST"])
+def item(request):
+    data = json.loads(request.body)
+    name = data['name']
+    description = data['description']
+    item = Item(name, description)
+    item.save()
+    return JsonResponse({'msg':"item created"})

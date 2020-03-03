@@ -52,6 +52,12 @@ class Player(models.Model):
             self.initialize()
             return self.room()
 
+
+class Item(models.Model):
+    print("creating item object")
+    name = models.CharField(max_length=50, default="DEFAULT NAME")
+    description = models.CharField(max_length=500, default="DEFAULT DESCRIPTION")
+
 @receiver(post_save, sender=User)
 def create_user_player(sender, instance, created, **kwargs):
     if created:
@@ -61,6 +67,16 @@ def create_user_player(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def save_user_player(sender, instance, **kwargs):
     instance.player.save()
+
+@receiver(post_save, sender=User)
+def create_item(sender, instance, created, **kwargs):
+    print(sender)
+    print(instance)
+    print(created)
+    for arg in kwargs:
+        print(arg)
+    if created:
+        Item.objects.create(user=instance)
 
 
 
