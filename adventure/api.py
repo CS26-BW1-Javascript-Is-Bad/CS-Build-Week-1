@@ -27,7 +27,7 @@ def initialize(request):
          'players': players}, safe=True)
 
 
-# @csrf_exempt
+@csrf_exempt
 @api_view(["POST"])
 def move(request):
     dirs = {"n": "north", "s": "south", "e": "east", "w": "west"}
