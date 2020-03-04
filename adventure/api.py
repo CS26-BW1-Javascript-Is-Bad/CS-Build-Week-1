@@ -58,8 +58,7 @@ def move(request):
         #     pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'message':f'{player.user.username} has walked {dirs[direction]}.'})
         # for p_uuid in nextPlayerUUIDs:
         #     pusher.trigger(f'p-channel-{p_uuid}', u'broadcast', {'message':f'{player.user.username} has entered from the {reverse_dirs[direction]}.'})
-        return JsonResponse({'name': player.user.username, 'title': nextRoom.title, 'description': nextRoom.description,
-                             'players': players, 'error_msg': ""}, safe=True)
+        return JsonResponse({'name': player.user.username, 'players': players, 'error_msg': ""}, safe=True)
     else:
         players = room.playerNames(player_id)
         return JsonResponse(
@@ -92,4 +91,5 @@ def get_room_by_id(request, room_id):
 @api_view(["GET"])
 def get_map(request):
     rooms = [room for room in Room.objects.values()]
-    return JsonResponse({'map': rooms})
+    current_room = request.user.player.currentRoom
+    return JsonResponse({'map': rooms, 'current_room':current_room})
