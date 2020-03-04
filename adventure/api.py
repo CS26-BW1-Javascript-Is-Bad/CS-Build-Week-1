@@ -92,4 +92,5 @@ def get_room_by_id(request, room_id):
 @api_view(["GET"])
 def get_map(request):
     rooms = [room for room in Room.objects.values()]
-    return JsonResponse({'map': rooms})
+    current_room = request.user.player.currentRoom
+    return JsonResponse({'map': rooms, 'current_room':current_room})
