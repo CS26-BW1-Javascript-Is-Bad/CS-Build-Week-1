@@ -53,6 +53,11 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     currentRoom = models.IntegerField(default=0)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
+    room_x_position = models.IntegerField(default=0)
+    room_y_position = models.IntegerField(default=0)
+    chat_text = models.CharField(max_length=50, default="")
+    hp = models.IntegerField(default=100)
+    is_online = models.BooleanField(default=False)
 
     def initialize(self):
         if self.currentRoom == 0:
